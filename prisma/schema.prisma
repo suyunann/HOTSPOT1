@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Property {
+  id             Int      @id @default(autoincrement())
+  title          String
+  address        String
+  price          Int
+  size           Float
+  type           String
+  searchCount    Int
+  searchIncrease Float
+  source         String
+  imageUrl       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Region {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  searchCount Int
+  changeRate  Float
+  hotLevel    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Keyword {
+  id          Int      @id @default(autoincrement())
+  term        String   @unique
+  searchCount Int
+  changeRate  Float
+  isRising    Boolean
+  relatedTerms String[] @default([])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Recommendation {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  type      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SystemSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+} 
